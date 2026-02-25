@@ -4,31 +4,28 @@ const { sendMail } = require("../utils/mailer");
 
 router.post("/", async (req, res) => {
   try {
-    const { service, date, name, phone, email, details } = req.body;
+    const { name, phone, message } = req.body;
 
-    if (!service || !date || !name || !phone) {
-      return res.status(400).json({ message: "Missing fields" });
+    if (!name || !phone || !message) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     await sendMail({
       to: process.env.OWNER_EMAIL,
-      subject: "📅 New Booking Request",
-      text: `Service: ${service}\nDate: ${date}\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nDetails: ${details}`,
+      subject: "📩 New Contact Message",
+      text: `Name: ${name}\nPhone: ${phone}\nMessage: ${message}`,
       html: `
-        <h2>New Booking</h2>
-        <p><b>Service:</b> ${service}</p>
-        <p><b>Date:</b> ${date}</p>
+        <h2>New Contact Message</h2>
         <p><b>Name:</b> ${name}</p>
         <p><b>Phone:</b> ${phone}</p>
-        <p><b>Email:</b> ${email || "Not provided"}</p>
-        <p><b>Details:</b> ${details || "No details"}</p>
+        <p><b>Message:</b> ${message}</p>
       `,
     });
 
-    res.json({ success: true, message: "Booking sent successfully" });
-  } catch (err) {
-    console.log("❌ Booking mail error:", err);
-    res.status(500).json({ success: false, message: "Mail failed" });
+    res.status(200).json({ message: "Message sent successfully" });
+  } catch (error) {
+    console.error("❌ Contact mail error:", error);
+    res.status(500).json({ message: "Mail not sent", error: error.message });
   }
 });
 
