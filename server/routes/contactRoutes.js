@@ -4,6 +4,13 @@ const { sendMail } = require("../utils/mailer");
 console.log("Contact API Hit");
 router.post("/", async (req, res) => {
   try {
+        console.log("BODY RECEIVED:", req.body);
+
+    if (!req.body) {
+      return res.status(400).json({
+        success: false,
+        message: "No body received"
+      });}
     const { name, phone, message } = req.body;
 
     if (!name || !phone || !message) {
@@ -24,7 +31,7 @@ router.post("/", async (req, res) => {
       `,
     });
 
-    res.status(200).json({
+    res.json({
       success: true,
       message: "Message sent successfully",
     });
