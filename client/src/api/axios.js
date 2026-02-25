@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://tent-house-backend.onrender.com/api",
 });
 
 // 🔐 TOKEN AUTO ATTACH

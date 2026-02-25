@@ -33,7 +33,7 @@ const deleteMedia = async (id) => {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/media/${id}`, {
+    const res = await fetch(`https://tent-house-backend.onrender.com/api/media/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
