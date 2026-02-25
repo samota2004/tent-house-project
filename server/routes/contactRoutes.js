@@ -1,16 +1,10 @@
+console.log("BODY RECEIVED:", req.body);
 const express = require("express");
 const router = express.Router();
 const { sendMail } = require("../utils/mailer");
 console.log("Contact API Hit");
 router.post("/", async (req, res) => {
   try {
-        console.log("BODY RECEIVED:", req.body);
-
-    if (!req.body) {
-      return res.status(400).json({
-        success: false,
-        message: "No body received"
-      });}
     const { name, phone, message } = req.body;
 
     if (!name || !phone || !message) {
