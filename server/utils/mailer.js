@@ -1,22 +1,15 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // 587 => false
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS, // Gmail App Password (16 chars)
-  },
-  requireTLS: true,
-  tls: {
-    servername: "smtp.gmail.com",
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-transporter.verify((error) => {
-  if (error) console.log("MAIL ERROR ❌:", error);
-  else console.log("MAIL READY ✅");
-});
+async function sendMail({ to, subject, text, html }) {
+  return resend.emails.send({
+    from: "Pragati Tent House <onboarding@resend.dev>", // working default
+    to,
+    subject,
+    text,
+    html,
+  });
+}
 
-module.exports = transporter;
+module.exports = { sendMail };
