@@ -227,15 +227,7 @@ export default function Services() {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
-                   className="w-full p-3 rounded border
-             bg-white dark:bg-black
-             text-black dark:text-white
-             
-             dark:[color-scheme:dark]
-
-             dark:[&::-webkit-calendar-picker-indicator]:invert
-             dark:[&::-webkit-calendar-picker-indicator]:opacity-100
-             cursor-pointer"
+                  className="w-full p-3 rounded border dark:bg-black"
                   required
                 />
 
