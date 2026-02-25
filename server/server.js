@@ -14,12 +14,11 @@ const app = express();
 connectDB();
 
 // 🧩 Middleware
-app.use(
-  cors({
-    origin: "https://tent-house-project.vercel.app/", // frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors({
+  origin: ["http://localhost:3000", "https://tent-house-project.vercel.app"],
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: false, // cookies nahi use kar rahe to false
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
