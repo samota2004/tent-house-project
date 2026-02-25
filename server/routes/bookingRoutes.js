@@ -7,54 +7,53 @@ const transporter = require("../utils/mailer");
 // POST /api/booking
 router.post("/", async (req, res) => {
   try {
-
-    const {
-      service,
-      date,
-      name,
-      phone,
-      email,
-      details,
-    } = req.body;
+    const { service, date, name, phone, email, details } = req.body;
 
     if (!service || !date || !name || !phone) {
-      return res.status(400).json({ message: "Missing fields" });
+      return res.status(400).json({
+        success: false,
+        message: "Missing fields (service, date, name, phone are required)",
+      });
     }
 
-    const mailOptions = {
-      from: process.env.MAIL_USER,
-      to: process.env.OWNER_EMAIL, // owner ko
+    const info = await transporter.sendMail({
+      from: `"Pragati Tent House" <${process.env.MAIL_USER}>`, // ✅ consistent
+      to: process.env.OWNER_EMAIL,
       subject: "📅 New Booking Request",
-
+      replyTo: email || process.env.MAIL_USER, // ✅ so owner can reply directly
+      text: `New Booking Request
+Service: ${service}
+Date: ${date}
+Name: ${name}
+Phone: ${phone}
+Email: ${email || "Not provided"}
+Details: ${details || "No details"}
+`,
       html: `
-        <h2>New Booking</h2>
-
+        <h2>📅 New Booking</h2>
         <p><b>Service:</b> ${service}</p>
         <p><b>Date:</b> ${date}</p>
         <p><b>Name:</b> ${name}</p>
         <p><b>Phone:</b> ${phone}</p>
         <p><b>Email:</b> ${email || "Not provided"}</p>
         <p><b>Details:</b> ${details || "No details"}</p>
-
         <hr/>
         <p>Pragati Tent House Website</p>
       `,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.json({
-      success: true,
-      message: "Booking sent sucessfully",
     });
 
+    return res.json({
+      success: true,
+      message: "Booking sent successfully",
+      messageId: info.messageId,
+    });
   } catch (err) {
+    console.error("❌ Booking mail error:", err);
 
-    console.log("Booking mail error:", err);
-
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Mail failed",
+      error: err?.message || "Unknown error",
     });
   }
 });
