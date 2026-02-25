@@ -29,7 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
-
+app.use(cors({origin: "*" , credentials:true}));
 // 👑 Create owner account on first run
 const createOwnerAccount = async () => {
   try {
