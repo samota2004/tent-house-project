@@ -16,7 +16,7 @@ connectDB();
 // 🧩 Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // frontend URL
+    origin: "https://tent-house-project.vercel.app/", // frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
