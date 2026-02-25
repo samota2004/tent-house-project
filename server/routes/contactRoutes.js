@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { sendMail } = require("../utils/mailer");
-
+console.log("Contact API Hit");
 router.post("/", async (req, res) => {
   try {
     const { name, phone, message } = req.body;
