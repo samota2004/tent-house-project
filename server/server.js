@@ -39,7 +39,7 @@ const createOwnerAccount = async () => {
       await User.create({
         email: process.env.OWNER_EMAIL,
         password: process.env.OWNER_PASSWORD,
-        name: "Royal Tent House Owner",
+        name: "Pragati Tent House Owner",
         role: "owner",
       });
 

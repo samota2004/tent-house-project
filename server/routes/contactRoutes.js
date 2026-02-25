@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 
     // ✅ ACTUAL MAIL SEND
     const info = await transporter.sendMail({
-      from: `"Royal Tent House" <${process.env.EMAIL_USER}>`,
+      from: `"Pragati Tent House" <${process.env.EMAIL_USER}>`,
       to: process.env.OWNER_EMAIL,   // owner email
       subject: "📩 New Contact Message",
       text: `
