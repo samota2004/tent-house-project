@@ -177,7 +177,7 @@ export default function Home() {
                     🏅 18+
                   </p>
 
-                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                  <p className="text-sm text-gray-900 dark:text-gray-900">
                     Years Experience
                   </p>
                 </div>
@@ -194,7 +194,7 @@ export default function Home() {
                     🎉 2410+
                   </p>
 
-                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                  <p className="text-sm text-gray-900 dark:text-gray-900">
                     Happy Events
                   </p>
                 </div>
