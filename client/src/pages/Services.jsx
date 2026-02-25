@@ -227,7 +227,10 @@ export default function Services() {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
-                  className="w-full p-3 rounded border dark:bg-black"
+                      className="w-full p-3 pr-12 rounded border
+               bg-white dark:bg-black
+               text-black dark:text-white
+               cursor-pointer"
                   required
                 />
 
