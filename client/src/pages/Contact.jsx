@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sendContact } from "../api/contactApi";
+import api from "../api/axios";   // ⚠️ yaha change kiya
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
@@ -22,13 +22,19 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      await sendContact(formData);
-      setStatus({
-        type: "success",
-        text: "Message sent successfully!",
-      });
-      e.target.reset();
+      // ✅ Direct API call
+      const res = await api.post("/contact", formData);
+
+      if (res.data.success) {
+        setStatus({
+          type: "success",
+          text: "Message sent successfully!",
+        });
+        e.target.reset();
+      }
+
     } catch (err) {
+      console.log("CONTACT ERROR:", err.response?.data);
       setStatus({
         type: "error",
         text: "Failed to send message. Try again.",
@@ -41,7 +47,6 @@ export default function Contact() {
   return (
     <div className="min-h-screen pt-28 px-6 bg-white dark:bg-[#0a0a0a] transition-colors duration-300">
 
-      {/* Heading */}
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
           Get In <span className="text-purple-500">Touch</span>

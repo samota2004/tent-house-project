@@ -1,5 +1,3 @@
-const dns = require("dns");
-dns.setDefaultResultOrder("ipv4first");
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -30,7 +28,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
-app.use(cors({origin: "*" , credentials:true}));
 // 👑 Create owner account on first run
 const createOwnerAccount = async () => {
   try {

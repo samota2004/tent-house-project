@@ -7,13 +7,15 @@ router.post("/", async (req, res) => {
     const { name, phone, message } = req.body;
 
     if (!name || !phone || !message) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
     }
 
     await sendMail({
       to: process.env.OWNER_EMAIL,
       subject: "📩 New Contact Message",
-      text: `Name: ${name}\nPhone: ${phone}\nMessage: ${message}`,
       html: `
         <h2>New Contact Message</h2>
         <p><b>Name:</b> ${name}</p>
@@ -22,10 +24,17 @@ router.post("/", async (req, res) => {
       `,
     });
 
-    res.status(200).json({ message: "Message sent successfully" });
+    res.status(200).json({
+      success: true,
+      message: "Message sent successfully",
+    });
+
   } catch (error) {
-    console.error("❌ Contact mail error:", error);
-    res.status(500).json({ message: "Mail not sent", error: error.message });
+    console.log("❌ MAIL ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 });
 

@@ -58,7 +58,7 @@ export default function Services() {
       setLoading(true);
 
       const res = await fetch(
-        "https://tent-house-backend.onrender.com/api/booking",
+        "http://localhost:5000/api/booking",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -83,6 +83,13 @@ export default function Services() {
   return (
     <div className="min-h-screen pt-28 px-6 bg-gray-50 dark:bg-[#0a0a0a]">
 
+      {/* Heading */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+          Our <span className="text-purple-600">Premium Services</span>
+        </h1>
+        <div className="w-24 h-1 bg-purple-600 mx-auto mt-4 rounded-full"></div>
+      </div> 
       {/* SERVICES GRID */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
@@ -102,6 +109,8 @@ export default function Services() {
               onClick={() => {
                 setShowBooking(true);
                 setServiceName(s.title);
+                                  setSuccess("");
+                  setError("");
               }}
               className="w-full py-3 rounded-full text-white 
               bg-gradient-to-r from-purple-600 to-pink-500"
