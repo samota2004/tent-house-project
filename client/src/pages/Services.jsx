@@ -161,15 +161,23 @@ export default function Services() {
               <form onSubmit={handleSubmit} className="space-y-4">
 
                 {/* DATE FIXED INPUT */}
-               <input
-  type="date"
-  name="date"
-  value={formData.date}
-  onChange={handleChange}
-  required
-  className="w-full p-3 rounded border bg-white dark:bg-black text-black dark:text-white"
-  style={{ colorScheme: "light dark" }}
-/>
+               <div className="relative w-full">
+  <input
+    type="date"
+    name="date"
+    value={formData.date}
+    onChange={handleChange}
+    required
+    className="w-full p-3 pr-12 rounded border 
+    bg-white dark:bg-black 
+    text-black dark:text-white"
+  />
+
+  {/* Custom Calendar Icon */}
+  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xl pointer-events-none">
+    📅
+  </span>
+</div>
 
                 <input
                   type="text"
