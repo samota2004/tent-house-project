@@ -161,10 +161,14 @@ export default function Services() {
               <form onSubmit={handleSubmit} className="space-y-4">
 
                 {/* DATE FIXED INPUT */}
-              <input
+               <input
   type="date"
-  className="w-full p-3 rounded border bg-white text-black dark:bg-black dark:text-white"
-  style={{ WebkitAppearance: "auto" }}
+  name="date"
+  value={formData.date}
+  onChange={handleChange}
+  required
+  className="w-full p-3 rounded border bg-white dark:bg-black text-black dark:text-white"
+  style={{ colorScheme: "light dark" }}
 />
 
                 <input
