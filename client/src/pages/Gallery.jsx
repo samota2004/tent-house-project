@@ -25,33 +25,13 @@ export default function Gallery() {
 
   // 🔥 DELETE USING MongoDB _id
 const deleteMedia = async (id) => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    alert("User not authenticated");
-    return;
-  }
-
   try {
-    const res = await fetch(`http://localhost:5000/api/media/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await api.delete(`/media/${id}`);
 
-    const data = await res.json();
-    console.log("Delete response:", data);
-
-    if (!res.ok) {
-      alert(data.message || "Delete failed");
-      return;
-    }
-
-    // UI se turant remove
     setMedia((prev) => prev.filter((item) => item._id !== id));
   } catch (error) {
-    console.error("Delete error:", error);
+    console.error("Delete error:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Delete failed");
   }
 };
 
