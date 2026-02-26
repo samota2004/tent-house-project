@@ -167,10 +167,8 @@ export default function Services() {
   value={formData.date}
   onChange={handleChange}
   required
-  className="w-full p-3 rounded border
-  bg-white text-black
-  dark:bg-black dark:text-white
-  [color-scheme:light] dark:[color-scheme:dark]"
+  className="w-full p-3 rounded border bg-white dark:bg-black text-black dark:text-white"
+  style={{ colorScheme: "light dark" }}
 />
 
                 <input
