@@ -163,15 +163,20 @@ export default function Services() {
                 {/* DATE FIXED INPUT */}
                <div className="relative w-full">
   <input
-    type="date"
-    name="date"
-    value={formData.date}
-    onChange={handleChange}
-    required
-    className="w-full p-3 pr-12 rounded border 
-    bg-white dark:bg-black 
-    text-black dark:text-white"
-  />
+  type="text"
+  name="date"
+  placeholder="Select Event Date"
+  value={formData.date}
+  onFocus={(e) => (e.target.type = "date")}
+  onBlur={(e) => {
+    if (!e.target.value) e.target.type = "text";
+  }}
+  onChange={handleChange}
+  required
+  className="w-full p-3 rounded border 
+  bg-white dark:bg-black 
+  text-black dark:text-white"
+/>
 
   {/* Custom Calendar Icon */}
   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xl pointer-events-none">
