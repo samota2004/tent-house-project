@@ -1,17 +1,20 @@
 import { useState } from "react";
-import api from "../api/axios";   // ⚠️ yaha change kiya
+import api from "../api/axios";
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
 
   const submit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();   // 🔥 prevent page reload
     setStatus(null);
 
     const formData = Object.fromEntries(new FormData(e.target));
 
-    if (!formData.name || !formData.phone || !formData.message?.trim()) {
+    // Validation
+    if (!formData.name?.trim() || 
+        !formData.phone?.trim() || 
+        !formData.message?.trim()) {
       setStatus({
         type: "error",
         text: "Please fill all required fields",
@@ -19,10 +22,9 @@ export default function Contact() {
       return;
     }
 
-    setLoading(true);
-
     try {
-      // ✅ Direct API call
+      setLoading(true);
+
       const res = await api.post("/contact", formData);
 
       if (res.data.success) {
@@ -31,14 +33,22 @@ export default function Contact() {
           text: "Message sent successfully!",
         });
         e.target.reset();
+      } else {
+        setStatus({
+          type: "error",
+          text: res.data.message || "Something went wrong",
+        });
       }
 
     } catch (err) {
-      console.log("CONTACT ERROR:", err.response?.data);
+      console.log("CONTACT ERROR:", err.response?.data || err.message);
+
       setStatus({
         type: "error",
-        text: "Failed to send message. Try again.",
+        text: err.response?.data?.message || 
+              "Failed to send message. Try again.",
       });
+
     } finally {
       setLoading(false);
     }
@@ -59,7 +69,7 @@ export default function Contact() {
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
 
-        {/* LEFT SIDE INFO */}
+        {/* LEFT INFO */}
         <div className="p-8 rounded-3xl bg-gradient-to-br from-purple-600/20 to-pink-600/20 
                         backdrop-blur-xl border border-purple-500/30 shadow-xl">
 
@@ -108,7 +118,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* RIGHT SIDE FORM */}
+        {/* FORM */}
         <div className="p-8 rounded-3xl bg-white dark:bg-gray-900 
                         border border-gray-200 dark:border-gray-700 shadow-xl">
 
@@ -122,6 +132,7 @@ export default function Contact() {
               name="name"
               placeholder="Full Name"
               disabled={loading}
+              required
               className="w-full p-3 rounded-lg bg-gray-100 dark:bg-black 
                          border border-gray-300 dark:border-gray-700
                          focus:ring-2 focus:ring-purple-500 outline-none"
@@ -131,6 +142,7 @@ export default function Contact() {
               name="phone"
               placeholder="Phone Number"
               disabled={loading}
+              required
               className="w-full p-3 rounded-lg bg-gray-100 dark:bg-black 
                          border border-gray-300 dark:border-gray-700
                          focus:ring-2 focus:ring-purple-500 outline-none"
@@ -141,6 +153,7 @@ export default function Contact() {
               placeholder="Tell us about your event..."
               rows="5"
               disabled={loading}
+              required
               className="w-full p-3 rounded-lg bg-gray-100 dark:bg-black 
                          border border-gray-300 dark:border-gray-700
                          focus:ring-2 focus:ring-purple-500 outline-none"
@@ -159,6 +172,7 @@ export default function Contact() {
             )}
 
             <button
+              type="submit"  
               disabled={loading}
               className="w-full py-3 rounded-full text-white font-medium
                          bg-gradient-to-r from-purple-600 to-pink-500
