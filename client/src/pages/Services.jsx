@@ -58,7 +58,7 @@ export default function Services() {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:5000/api/booking",
+        "https://tent-house-backend.onrender.com/api/booking",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

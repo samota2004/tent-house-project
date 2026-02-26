@@ -18,15 +18,17 @@ function Login() {
         password,
       });
 
-      login({
-      token: res.data.token,
-      role: res.data.role,
-    });
+      const userData = {
+        token: res.data.token,
+        role: res.data.role,
+      };
+
+      login(userData);
 
       alert("Login successful");
       navigate("/gallery", { replace: true });
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      alert("Invalid email or password");
     }
   };
 
