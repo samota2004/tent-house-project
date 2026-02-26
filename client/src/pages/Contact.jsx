@@ -1,58 +1,63 @@
 import { useState } from "react";
-import api from "../api/axios";
+// import api from "../api/axios";
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
 
   const submit = async (e) => {
-    e.preventDefault();   // 🔥 prevent page reload
-    setStatus(null);
+  e.preventDefault();
+  setStatus(null);
 
-    const formData = Object.fromEntries(new FormData(e.target));
+  const formData = Object.fromEntries(new FormData(e.target));
 
-    // Validation
-    if (!formData.name?.trim() || 
-        !formData.phone?.trim() || 
-        !formData.message?.trim()) {
-      setStatus({
-        type: "error",
-        text: "Please fill all required fields",
-      });
-      return;
-    }
+  if (
+    !formData.name?.trim() ||
+    !formData.phone?.trim() ||
+    !formData.message?.trim()
+  ) {
+    setStatus({
+      type: "error",
+      text: "Please fill all required fields",
+    });
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await api.post("/contact", formData);
-
-      if (res.data.success) {
-        setStatus({
-          type: "success",
-          text: "Message sent successfully!",
-        });
-        e.target.reset();
-      } else {
-        setStatus({
-          type: "error",
-          text: res.data.message || "Something went wrong",
-        });
+    const response = await fetch(
+      "https://formspree.io/f/xjgelzab",  // 👈 tumhara Formspree endpoint
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       }
+    );
 
-    } catch (err) {
-      console.log("CONTACT ERROR:", err.response?.data || err.message);
-
+    if (response.ok) {
+      setStatus({
+        type: "success",
+        text: "Message sent successfully!",
+      });
+      e.target.reset();
+    } else {
       setStatus({
         type: "error",
-        text: err.response?.data?.message || 
-              "Failed to send message. Try again.",
+        text: "Something went wrong. Try again.",
       });
-
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (error) {
+    setStatus({
+      type: "error",
+      text: "Failed to send message. Try again.",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen pt-28 px-6 bg-white dark:bg-[#0a0a0a] transition-colors duration-300">
