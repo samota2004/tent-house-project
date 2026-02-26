@@ -17,7 +17,7 @@ connectDB();
 app.use(cors({
   origin: ["http://localhost:3000", "https://tent-house-project.vercel.app"],
   methods: ["GET","POST","PUT","DELETE"],
-  credentials: false, // cookies nahi use kar rahe to false
+  credentials: false,
 }));
 
 app.use(express.json());
