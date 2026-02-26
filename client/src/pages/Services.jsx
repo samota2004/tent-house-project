@@ -179,7 +179,8 @@ export default function Services() {
 />
 
   {/* Custom Calendar Icon */}
-  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xl pointer-events-none">
+  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xl 
+text-gray-700 dark:text-white pointer-events-none">
     📅
   </span>
 </div>
